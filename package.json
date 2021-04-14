@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-sample-project",
+  "version": "1.0.0",
+  "description": "Node.js sample project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaharshiPatel/nodeJs-sample-project.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "Maharshi Patel",
+  "bugs": {
+    "url": "https://github.com/MaharshiPatel/nodeJs-sample-project/issues"
+  },
+  "homepage": "https://github.com/MaharshiPatel/nodeJs-sample-project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "http-errors": "^1.7.2",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7"
+  }
+}

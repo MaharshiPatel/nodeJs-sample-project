@@ -21,6 +21,9 @@ pipelines:
       - name: npm_build_step
         type: NpmBuild
         configuration:
+          environmentVariables:
+            readOnly:
+              my_env_var: '1.0.$run_number'
           repositoryName: npm-virtual      # required, npm repository name on artifacctory
           sourceLocation: .      # required, location of package.json file
           integrations:

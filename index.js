@@ -19,7 +19,7 @@ app.get('/session', (req, res) => {
 app.use((req, res, next) => {
     const error = new Error("Not found");
     error.status = 404;
-    error.message = "🐸 Ribbit Ribbit Ribbit 🐸"
+    error.message = "🐸 Ribbit Ribbit Ribbit Ribbit 🐸"
     next(error);
 });
 

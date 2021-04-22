@@ -24,7 +24,7 @@ pipelines:
           repositoryName: npm-virtual      # required, npm repository name on artifacctory
           sourceLocation: .      # required, location of package.json file
           integrations:
-            - name:  demoArt  # required
+            - name:  art  # required
           inputResources:
             - name: npm_repo_jfp_example         # required
 
@@ -35,7 +35,7 @@ pipelines:
           repositoryName: npm-virtual        # required, npm repository name on artifactory
           autoPublishBuildInfo: true       # optional
           integrations:
-            - name: demoArt      # required
+            - name: art      # required
           inputSteps:
             - name: npm_build_step                # required
           outputResources:

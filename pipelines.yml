@@ -22,12 +22,24 @@ pipelines:
         type: NpmBuild
         configuration:
           repositoryName: npm-virtual      # required, npm repository name on artifacctory
-          forceXrayScan: true
           sourceLocation: .      # required, location of package.json file
           integrations:
             - name:  art  # required
           inputResources:
             - name: bld_npm_backend         # required
+
+      - name: npm_push_step
+        type: NpmPush
+        configuration:
+        targetRepository: npm-local
+        forceXrayScan: true
+        autoPublishBuildInfo: true
+        integrations:
+          - name: art
+        inputSteps:
+          - name: npm_build_step
+        outputResources:
+          - name: NpmBuildInfo
 
       - name: npm_publish_step
         type: NpmPublish

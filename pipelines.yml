@@ -31,15 +31,15 @@ pipelines:
       - name: npm_push_step
         type: NpmPush
         configuration:
-        targetRepository: npm-local
-        forceXrayScan: true
-        autoPublishBuildInfo: true
-        integrations:
-          - name: art
-        inputSteps:
-          - name: npm_build_step
-        outputResources:
-          - name: NpmBuildInfo
+          targetRepository: npm-local
+          forceXrayScan: true
+          autoPublishBuildInfo: true
+          integrations:
+            - name: art
+          inputSteps:
+            - name: npm_build_step
+          outputResources:
+            - name: NpmBuildInfo
 
       - name: npm_publish_step
         type: NpmPublish

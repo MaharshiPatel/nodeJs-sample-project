@@ -26,7 +26,7 @@ pipelines:
           integrations:
             - name:  art  # required
           inputResources:
-            - name: npm_repo_jfp_example         # required
+            - name: bld_npm_backend         # required
 
       - name: npm_publish_step
         type: NpmPublish

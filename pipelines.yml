@@ -39,4 +39,4 @@ pipelines:
           inputSteps:
             - name: npm_build_step                # required
           outputResources:
-            - name: npm_buildinfo_jfp_example                 # optional
+            - name: bld_npm_backend                 # optional

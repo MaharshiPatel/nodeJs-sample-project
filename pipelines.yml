@@ -16,7 +16,7 @@ resources:
       sourceArtifactory: art
 
 pipelines:
-  - name: npm_pipeline_jfp_example
+  - name: npm_pipeline_example
     configuration:
           environmentVariables:
             readOnly:

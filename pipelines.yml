@@ -28,24 +28,12 @@ pipelines:
           inputResources:
             - name: bld_npm_backend         # required
 
-      - name: npm_push_step
-        type: NpmPush
-        configuration:
-          targetRepository: npm-local
-          forceXrayScan: true
-          autoPublishBuildInfo: true
-          integrations:
-            - name: art
-          inputSteps:
-            - name: npm_build_step
-          outputResources:
-            - name: NpmBuildInfo
-
       - name: npm_publish_step
         type: NpmPublish
         configuration:
           # for payloadType npm:
           repositoryName: npm-virtual        # required, npm repository name on artifactory
+          forceXrayScan: true
           autoPublishBuildInfo: true       # optional
           integrations:
             - name: art      # required

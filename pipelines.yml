@@ -2,13 +2,10 @@ resources:
   - name: bld_npm_backend
     type: GitRepo
     configuration:
-      # SCM integration where the repository is located
-      gitProvider: Github_maharshi
-      # Repository path, including org name/repo name
-      path: maharshipatel/nodejs-sample-project
+      gitProvider: Github_maharshi    # VCS integration name
+      path: maharshipatel/nodejs-sample-project   # VCS Repository path
       branches:
-        # Specifies which branches will trigger dependent steps
-        include: main
+        include: main   # Specifies which branches will trigger dependent steps
 
   - name: NpmBuildInfo
     type: BuildInfo
@@ -21,7 +18,7 @@ pipelines:
           environmentVariables:
             readOnly:
               my_env_var: '1.0.$run_number'
-              ArtIP: $(echo ${int_ArtifactoryUnified_url}|awk -F '/' '{print $3}'|awk -F ':' '{print $1}')
+              
     steps:
       - name: npm_build_step
         type: NpmBuild
@@ -39,6 +36,7 @@ pipelines:
           # for payloadType npm:
           repositoryName: npm-virtual        # required, npm repository name on artifactory
           forceXrayScan: true
+          failOnScan: true       # default is TRUE
           autoPublishBuildInfo: true       # optional
           integrations:
             - name: art      # required

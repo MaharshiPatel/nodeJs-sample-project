@@ -22,6 +22,7 @@ pipelines:
         type: NpmBuild
         configuration:
           repositoryName: npm-virtual      # required, npm repository name on artifacctory
+          forceXrayScan: true
           sourceLocation: .      # required, location of package.json file
           integrations:
             - name:  art  # required

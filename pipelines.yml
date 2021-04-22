@@ -38,5 +38,3 @@ pipelines:
             - name: art      # required
           inputSteps:
             - name: npm_build_step                # required
-          outputResources:
-            - name: bld_npm_backend                 # optional

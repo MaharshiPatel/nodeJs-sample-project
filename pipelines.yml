@@ -33,8 +33,10 @@ pipelines:
         configuration:
           # for payloadType npm:
           repositoryName: npm-virtual        # required, npm repository name on artifactory
-          autoPublishBuildInfo: false       # optional
+          autoPublishBuildInfo: true       # optional
           integrations:
             - name: art      # required
           inputSteps:
             - name: npm_build_step                # required
+          outputResources:
+            - name: NpmBuildInfo                 # optional

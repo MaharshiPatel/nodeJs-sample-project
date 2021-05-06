@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const npmExample = require('npm-example');
 
 const app = express()
-const port = 3000
+const port = 3333
 
 app.use(morgan('tiny'))
 
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
     error.message = "🐸 Ribbit Ribbit Ribbit Ribbit 🐸"
     next(error);
 });
+
+console.log(npmExample.HelloFrogs.message);
 
 // error handler middleware
 app.use((error, req, res, next) => {

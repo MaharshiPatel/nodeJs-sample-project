@@ -2,7 +2,7 @@ resources:
   - name: bld_npm_backend
     type: GitRepo
     configuration:
-      gitProvider: Github   # VCS integration name
+      gitProvider: GitHub   # VCS integration name
       path: maharshipatel/nodejs-sample-project   # VCS Repository path
       branches:
         include: main   # Specifies which branches will trigger dependent steps

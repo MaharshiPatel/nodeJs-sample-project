@@ -1,46 +1,64 @@
 resources:
-  - name: bld_npm_backend
-    type: GitRepo
-    configuration:
-      gitProvider: GitHub   # VCS integration name
-      path: maharshipatel/nodejs-sample-project   # VCS Repository path
-      branches:
-        include: main   # Specifies which branches will trigger dependent steps
-
-  - name: NpmBuildInfo
-    type: BuildInfo
-    configuration:
-      sourceArtifactory: art
-
+- name: MaharshiPatel_nodeJs_sample_project_gitResource
+  type: GitRepo
+  configuration:
+    path: MaharshiPatel/nodeJs-sample-project
+    gitProvider: github_MaharshiPatel_nodeJs_sample_project_integration
+    buildOn:
+      pullRequestCreate: true
+    branches:
+      include: main
+- name: MaharshiPatel_nodeJs_sample_project_buildInfoResource
+  type: BuildInfo
+  configuration:
+    sourceArtifactory: rt_MaharshiPatel_nodeJs_sample_project_integration
+    buildName: nodeJs-sample-project-main
+    buildNumber: $run_number
 pipelines:
-  - name: npm_pipeline_example
+- name: MaharshiPatel_nodeJs_sample_project_pipeline
+  configuration:
+    environmentVariables:
+      readOnly:
+        CI: "true"
+        JFROG_CLI_BUILD_NAME: nodeJs-sample-project-main
+        JFROG_CLI_BUILD_NUMBER: $run_number
+        JFROG_CLI_BUILD_URL: $step_url
+  steps:
+  - name: NpmBuildStep
+    type: Bash
     configuration:
-          environmentVariables:
-            readOnly:
-              my_env_var: '1.0.$run_number'
-
-    steps:
-      - name: npm_build_step
-        type: NpmBuild
-        configuration:
-          repositoryName: npm-virtual      # required, npm repository name on artifacctory
-          sourceLocation: .      # required, location of package.json file
-          integrations:
-            - name:  art  # required
-          inputResources:
-            - name: bld_npm_backend         # required
-
-      - name: npm_publish_step
-        type: NpmPublish
-        configuration:
-          # for payloadType npm:
-          repositoryName: npm-virtual        # required, npm repository name on artifactory
-          forceXrayScan: true
-          failOnScan: true       # default is TRUE
-          autoPublishBuildInfo: true       # optional
-          integrations:
-            - name: art      # required
-          inputSteps:
-            - name: npm_build_step                # required
-          outputResources:
-            - name: NpmBuildInfo                 # optional
+      environmentVariables:
+        JFROG_BUILD_STATUS: PASS
+      integrations:
+      - name: rt_MaharshiPatel_nodeJs_sample_project_integration
+      inputResources:
+      - name: MaharshiPatel_nodeJs_sample_project_gitResource
+    execution:
+      onExecute:
+      - cd $res_MaharshiPatel_nodeJs_sample_project_gitResource_resourcePath
+      - jfrog rt c MaharshiPatel_nodeJs_sample_project_serverId --url $int_rt_MaharshiPatel_nodeJs_sample_project_integration_url
+        --user $int_rt_MaharshiPatel_nodeJs_sample_project_integration_user --enc-password=false
+      - jfrog rt npm-config --server-id-resolve MaharshiPatel_nodeJs_sample_project_serverId
+        --repo-resolve sup016-npm-virtual
+      - jfrog rt npmi
+      - jfrog rt bag
+      - jfrog rt bce
+      onComplete:
+      - add_run_files /tmp/jfrog/. jfrog
+      onFailure:
+      - export JFROG_BUILD_STATUS=FAIL
+      - jfrog rt bce
+      - jfrog rt bp
+  - name: PublishBuildInfoStep
+    type: PublishBuildInfo
+    configuration:
+      inputResources:
+      - name: MaharshiPatel_nodeJs_sample_project_gitResource
+      outputResources:
+      - name: MaharshiPatel_nodeJs_sample_project_buildInfoResource
+      inputSteps:
+      - name: NpmBuildStep
+      forceXrayScan: true
+    execution:
+      onComplete:
+      - update_commit_status MaharshiPatel_nodeJs_sample_project_gitResource
